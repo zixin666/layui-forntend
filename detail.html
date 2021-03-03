@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="./css/base.css">
+	<link rel="stylesheet" href="./css/nprogress.css">
+    <style>
+        .crumbs {
+            font-size: 14px;
+            color:#ccc;
+        }
+
+        .crumbs a {
+            color:#ccc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default" id="nav">
+            
+        </nav>
+        <div style="text-align:center;">
+            <h4 class="crumbs" id="crumbs" style="text-align:left;">当前位置：首页 / 体育 / OSX Mojave 编译 & 源码调试 openJdk 8</h4>
+            <h3 id="title"></h3>
+            <div id="detailInfo" style="font-size: 14px; color: #999;"> 2019-04-26 /
+                分类：体育 / 点赞：888 <span class="label label-default">HTML</span> <span class="label label-default">JS</span>
+            </div>
+
+
+        </div>
+        <div class="content" id="content">
+        </div>
+        <hr>
+        <div class="footer" style="text-align:center;font-size: 14px; color: #999;margin:10px 0;">
+            首页 | 主站 | GitHub | Powered by hexo | Theme xoxo
+        </div>
+    </div>
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/axios.js"></script>
+<script src="./utils/request.js"></script>
+<script src="./js/nprogress.js"></script>
+<script src="./js/moment.js"></script>
+<script src='./js/common.js'></script>
+<script>
+ 
+    let {art_id} = searchParam(location.href)
+    async function loadArtDetail(){
+      let data =  await axios.get('/article/' + art_id)
+      let {title,content,author,cat_name,publish_date,like} = data
+      // 渲染页面
+      // 面包屑导航
+      let crumbs = `当前位置：<a href="/">首页</a> / ${cat_name} / ${title}`;
+
+      $("#crumbs").html(crumbs)
+      let detailnfo = `${formatDate(publish_date,'YYYY-MM-DD')} /
+                分类：${cat_name} / 点赞：${like}`;
+      $("#detailInfo").html(detailnfo)
+      $("#title").html(title)
+      $("#content").html(content)
+
+      
+    }
+    loadArtDetail()
+</script>
+
+</html>
